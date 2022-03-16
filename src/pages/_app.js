@@ -1,11 +1,7 @@
 import '../styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import rootReducer from '../redux/store'
-import thunk from 'redux-thunk'
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
+import store from '../redux/store'
 
 function MyApp({ Component, pageProps }) {
   return (
