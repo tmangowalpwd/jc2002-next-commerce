@@ -13,7 +13,7 @@ export const auth_reducer = (state = init_state, action) => {
       ...state,
       username: action.payload.username,
       email: action.payload.email,
-      fullName: action.payload.fullName,
+      fullName: action.payload.full_name,
       id: action.payload.id,
       errorMsg: ""
     }

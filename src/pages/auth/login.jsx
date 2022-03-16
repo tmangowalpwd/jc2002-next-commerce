@@ -24,6 +24,8 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { auth_types } from "../../redux/types";
 import { testFn, userLogin } from "../../redux/actions/auth";
+import { useRequiresAuth } from "../../lib/hooks/useRequiresAuth";
+import { useAuth } from "../../lib/hooks/useAuth";
 
 const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -53,15 +55,17 @@ const LoginPage = () => {
     },
   });
 
+  const inputHandler = (event) => {
+    const { value, name } = event.target;
+
+    formik.setFieldValue(name, value);
+  };
+
   useEffect(() => {
-    if (authSelector.errorMsg) {
-      toast({
-        status: "error",
-        title: "Login failed!",
-        description: authSelector.errorMsg,
-      });
+    if (authSelector.id) {
+      router.push("/");
     }
-  }, [authSelector.errorMsg]);
+  }, [authSelector.id]);
 
   return (
     <Container maxW="lg">
@@ -74,10 +78,9 @@ const LoginPage = () => {
             <FormControl isInvalid={formik.errors.username}>
               <FormLabel htmlFor="inputUsername">Username</FormLabel>
               <Input
-                onChange={(event) =>
-                  formik.setFieldValue("username", event.target.value)
-                }
+                onChange={inputHandler}
                 id="inputUsername"
+                name="username"
               />
               <FormHelperText>{formik.errors.username}</FormHelperText>
             </FormControl>
@@ -90,9 +93,8 @@ const LoginPage = () => {
                 <Input
                   type={passwordVisible ? "text" : "password"}
                   id="inputPassword"
-                  onChange={(event) =>
-                    formik.setFieldValue("password", event.target.value)
-                  }
+                  onChange={inputHandler}
+                  name="password"
                 />
                 <InputRightElement
                   children={
