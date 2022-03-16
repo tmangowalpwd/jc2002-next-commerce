@@ -27,7 +27,6 @@ import { testFn, userLogin } from "../../redux/actions/auth";
 
 const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -47,12 +46,10 @@ const LoginPage = () => {
       password: Yup.string().required("This field is required"),
     }),
     validateOnChange: false,
-    onSubmit: async (values) => {
-      setLoading(true);
-
-      dispatch(userLogin(values));
-
-      setLoading(false);
+    onSubmit: (values) => {
+      setTimeout(() => {
+        dispatch(userLogin(values, formik.setSubmitting));
+      }, 2000);
     },
   });
 
@@ -116,7 +113,7 @@ const LoginPage = () => {
                 onClick={formik.handleSubmit}
                 type="submit"
                 colorScheme="blue"
-                disabled={loading}
+                disabled={formik.isSubmitting}
               >
                 Login
               </Button>
