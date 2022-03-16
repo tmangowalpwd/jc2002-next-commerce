@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config) => {
-  console.log(config.url)
+  // config.headers.token = "testing123"
 
   return config
 })
@@ -21,7 +21,10 @@ axiosInstance.interceptors.response.use(
   (err) => {
     store.dispatch({
       type: network_types.NETWORK_ERROR,
-      payload: err.message
+      payload: {
+        title: "Network Error",
+        description: err.message
+      }
     })
 
     return err

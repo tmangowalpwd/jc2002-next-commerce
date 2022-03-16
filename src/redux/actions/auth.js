@@ -1,6 +1,6 @@
 import jsCookie from "js-cookie";
 import api from "../../lib/api";
-import { auth_types } from "../types";
+import { auth_types, network_types } from "../types";
 
 export const userLogin = (values, setSubmitting) => {
   return async (dispatch) => {
@@ -35,8 +35,11 @@ export const userLogin = (values, setSubmitting) => {
       console.log(err)
 
       dispatch({
-        type: auth_types.AUTH_ERROR,
-        payload: err.message
+        type: network_types.NETWORK_ERROR,
+        payload: {
+          title: "Login Failed",
+          description: err.message
+        }
       })
       setSubmitting(false)
     }
