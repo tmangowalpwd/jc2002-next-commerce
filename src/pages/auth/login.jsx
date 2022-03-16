@@ -17,18 +17,21 @@ import {
 import jsCookie from "js-cookie";
 import api from "../../lib/api";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { auth_types } from "../../redux/types";
+import { testFn, userLogin } from "../../redux/actions/auth";
 
 const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const authSelector = useSelector((state) => state.auth);
 
   const router = useRouter();
 
@@ -47,52 +50,28 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setLoading(true);
 
-      try {
-        const res = await api.get("/users", {
-          params: {
-            username: values.username,
-            // password: values.password,
-          },
-        });
+      dispatch(userLogin(values));
 
-        if (!res.data.length) {
-          throw new Error("User not found");
-        }
-
-        if (res.data[0].password !== values.password) {
-          throw new Error("Wrong password");
-        }
-
-        const userData = res.data[0];
-        const stringifiedUserData = JSON.stringify(userData);
-
-        jsCookie.set("user_data", stringifiedUserData);
-
-        dispatch({
-          type: auth_types.LOGIN_USER,
-          payload: userData,
-        });
-
-        router.push("/");
-      } catch (err) {
-        console.log(err);
-
-        toast({
-          status: "error",
-          title: "Login Failed",
-          description: err.message,
-          duration: 2000,
-        });
-
-        setLoading(false);
-      }
+      setLoading(false);
     },
   });
+
+  useEffect(() => {
+    if (authSelector.errorMsg) {
+      toast({
+        status: "error",
+        title: "Login failed!",
+        description: authSelector.errorMsg,
+      });
+    }
+  }, [authSelector.errorMsg]);
 
   return (
     <Container maxW="lg">
       <Stack py="10" spacing={12}>
-        <Heading textAlign="center">Sign in to start shopping</Heading>
+        <Heading textAlign="center">
+          Sign in to start shopping {authSelector.username}
+        </Heading>
         <Box maxW="lg" backgroundColor="white" shadow="xl" p="8">
           <form>
             <FormControl isInvalid={formik.errors.username}>
