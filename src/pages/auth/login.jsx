@@ -21,10 +21,14 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { auth_types } from "../../redux/types";
 
 const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -63,6 +67,11 @@ const LoginPage = () => {
         const stringifiedUserData = JSON.stringify(userData);
 
         jsCookie.set("user_data", stringifiedUserData);
+
+        dispatch({
+          type: auth_types.LOGIN_USER,
+          payload: userData,
+        });
 
         router.push("/");
       } catch (err) {
