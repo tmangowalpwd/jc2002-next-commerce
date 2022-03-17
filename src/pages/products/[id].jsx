@@ -17,8 +17,56 @@ import {
 } from "@chakra-ui/react";
 import { BiPlus, BiMinus, BiHeart } from "react-icons/bi";
 import axiosInstance from "../../lib/api";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const ProductDetail = ({ productDetailData }) => {
+  const formik = useFormik({
+    initialValues: {
+      quantity: 1,
+    },
+    onSubmit: () => {
+      console.log("submit");
+    },
+    validationSchema: Yup.object().shape({
+      quantity: Yup.number().required().min(1).max(productDetailData.stock),
+    }),
+  });
+
+  const qtyInputHandler = (event) => {
+    const { value } = event.target;
+
+    if (value === "") {
+      formik.setFieldValue("quantity", event.target.value);
+      return;
+    }
+
+    const parsedValue = parseInt(value);
+
+    if (isNaN(parsedValue)) return;
+
+    if (parsedValue < 0) return;
+
+    formik.setFieldValue("quantity", event.target.value);
+  };
+
+  const qtyBtnHandler = (dir) => {
+    if (dir === "inc") {
+      if (formik.values.quantity === "") {
+        formik.setFieldValue("quantity", 1);
+        return;
+      }
+
+      if (formik.values.quantity >= productDetailData.stock) return;
+
+      formik.setFieldValue("quantity", parseInt(formik.values.quantity) + 1);
+    } else if (dir === "dec") {
+      if (formik.values.quantity < 1) return;
+
+      formik.setFieldValue("quantity", formik.values.quantity - 1);
+    }
+  };
+
   return (
     <Container minW="5xl" pt={20}>
       <Flex>
@@ -38,7 +86,12 @@ const ProductDetail = ({ productDetailData }) => {
               <Box>
                 <InputGroup size="lg">
                   <InputLeftElement
-                    children={<IconButton icon={<Icon as={BiMinus} />} />}
+                    children={
+                      <IconButton
+                        onClick={() => qtyBtnHandler("dec")}
+                        icon={<Icon as={BiMinus} />}
+                      />
+                    }
                   />
                   <Input
                     id="inputQty"
@@ -46,11 +99,17 @@ const ProductDetail = ({ productDetailData }) => {
                     textAlign="center"
                     _focus={{ outline: "none" }}
                     size="lg"
-                    defaultValue={0}
-                    min={0}
+                    defaultValue={1}
+                    onChange={qtyInputHandler}
+                    value={formik.values.quantity}
                   />
                   <InputRightElement
-                    children={<IconButton icon={<Icon as={BiPlus} />} />}
+                    children={
+                      <IconButton
+                        onClick={() => qtyBtnHandler("inc")}
+                        icon={<Icon as={BiPlus} />}
+                      />
+                    }
                   />
                 </InputGroup>
               </Box>
@@ -65,7 +124,9 @@ const ProductDetail = ({ productDetailData }) => {
               </Button>
             </Flex>
 
-            <Button colorScheme="blue">Add to cart</Button>
+            <Button onClick={formik.handleSubmit} colorScheme="blue">
+              Add to cart
+            </Button>
           </Stack>
         </Box>
 
