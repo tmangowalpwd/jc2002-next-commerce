@@ -107,7 +107,6 @@ const ProductDetail = ({ productDetailData, user }) => {
       image={productDetailData.image_url}
       url={`${WEB_URL}${router.asPath}`}
     >
-      <Text ml="20">{authSelector.username}</Text>
       <Container minW="5xl" pt={20}>
         <Flex>
           <Box flex={4} pr={8} display="flex" alignItems="center">

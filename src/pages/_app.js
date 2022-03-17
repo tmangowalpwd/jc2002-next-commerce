@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import store from '../redux/store'
 import NetworkMessageWrapper from '../component/NetworkMessageWrapper'
 import AuthProvider from '../component/AuthProvider'
+import Navbar from '../component/Navbar'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
       <ChakraProvider>
         <NetworkMessageWrapper>
           <AuthProvider>
+            <Navbar />
             <Component {...pageProps} />
           </AuthProvider>
         </NetworkMessageWrapper>
