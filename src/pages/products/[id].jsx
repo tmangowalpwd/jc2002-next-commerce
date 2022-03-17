@@ -16,22 +16,22 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { BiPlus, BiMinus, BiHeart } from "react-icons/bi";
+import axiosInstance from "../../lib/api";
 
-const ProductDetail = () => {
+const ProductDetail = ({ productDetailData }) => {
   return (
     <Container minW="5xl" pt={20}>
       <Flex>
         <Box flex={4} pr={8} display="flex" alignItems="center">
           <Stack spacing={6}>
-            <Heading fontWeight="medium">Product Name</Heading>
+            <Heading fontWeight="medium">
+              {productDetailData?.product_name}
+            </Heading>
             <Text fontWeight="medium" fontSize="xl">
-              Rp. {(380000).toLocaleString()}
+              Rp. {productDetailData?.price?.toLocaleString()}
             </Text>
-            <Text color="gray.600">
-              With a sleek design and a captivating essence, this is a modern
-              Classic made for every occasion.
-            </Text>
-            <Text fontWeight="medium">Stock: 10</Text>
+            <Text color="gray.600">{productDetailData?.description}</Text>
+            <Text fontWeight="medium">Stock: {productDetailData?.stock}</Text>
 
             <FormLabel htmlFor="inputQty">Quantity</FormLabel>
             <Flex>
@@ -46,6 +46,8 @@ const ProductDetail = () => {
                     textAlign="center"
                     _focus={{ outline: "none" }}
                     size="lg"
+                    defaultValue={0}
+                    min={0}
                   />
                   <InputRightElement
                     children={<IconButton icon={<Icon as={BiPlus} />} />}
@@ -72,12 +74,27 @@ const ProductDetail = () => {
             objectFit="cover"
             width="100%"
             height="xl"
-            src="https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/9999deeeddc8471743761964befbc60e9747d3eb_xxl-1.jpg"
+            src={productDetailData?.image_url}
           />
         </Box>
       </Flex>
     </Container>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  try {
+    const productId = context.query.id;
+    const res = await axiosInstance.get(`/products/${productId}`);
+
+    return {
+      props: {
+        productDetailData: res.data,
+      },
+    };
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export default ProductDetail;

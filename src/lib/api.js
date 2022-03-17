@@ -14,8 +14,6 @@ axiosInstance.interceptors.request.use((config) => {
 
 axiosInstance.interceptors.response.use(
   (res) => {
-    console.log(res.data)
-
     return res
   },
   (err) => {
