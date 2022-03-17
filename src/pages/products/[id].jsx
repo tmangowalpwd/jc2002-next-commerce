@@ -109,8 +109,6 @@ const ProductDetail = ({ productDetailData, user }) => {
 
   const addToCartBtnHandler = async () => {
     try {
-      // 1. Jika barang belom pernah add to cart
-      // 2. Jika barang SUDAH pernah add to cart
       const findItemInCart = cartSelector.items.find((val) => {
         return val.id === productDetailData.id;
       });
