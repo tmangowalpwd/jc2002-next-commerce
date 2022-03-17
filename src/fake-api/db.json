@@ -16,7 +16,8 @@
       "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/444b6b8e6d40c8249766694731048fb0b5d22eca_xxl-1.jpg",
       "description": "PREMIUM QUALITY Kaus oblong kerah bulat dari katun jersi premium.",
       "category": "kaos",
-      "discount": 0
+      "discount": 0,
+      "stock": 10
     },
     {
       "id": 2,
@@ -25,7 +26,8 @@
       "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/3a7c571f9b24cb488a5aa7f5bc587f9fa3aa852a_xxl-1.jpg",
       "description": "Chinos in stretch cotton twill with a zip fly and button, diagonal side pockets, a coin pocket and welt back pockets with a button. Regular Fit – a classic fit with good room for movement over the thighs and knees to create a comfortable, straight silhouette.",
       "category": "celana",
-      "discount": 10
+      "discount": 10,
+      "stock": 10
     },
     {
       "id": 3,
@@ -34,7 +36,8 @@
       "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/4d39f6d0648b382786568e42538b4f590ee67501_xxl-1.jpg",
       "description": "Celana jogger berbahan twill katun stretch dengan karet dan tali serut di bagian pinggang. Saku samping, saku kaki dan belakang dengan flap serta kancing tekan tersembunyi, dan karet di bagian kelim. Skinny Fit – ukuran dengan kaki yang sedikit lebih pendek dan mengepas di bagian paha, lutut, dan pergelangan kaki untuk menciptakan siluet yang pas.",
       "category": "celana",
-      "discount": 0
+      "discount": 0,
+      "stock": 10
     },
     {
       "id": 4,
@@ -43,7 +46,8 @@
       "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/d2209c129f37a7490b1d741c4a8a999e91727fb5_xxl-1.jpg",
       "description": "Kaus dari jersey katun bermotif yang lembut. Model relaxed fit dengan bahu menurun dan garis leher bulat dengan trim kecil.",
       "category": "kaos",
-      "discount": 20
+      "discount": 20,
+      "stock": 10
     },
     {
       "id": 5,
@@ -52,7 +56,8 @@
       "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/9999deeeddc8471743761964befbc60e9747d3eb_xxl-1.jpg",
       "description": "Celana panjang untuk setelan dari bahan tenun lentur, dengan kancing kait tersembunyi dan golbi ritsleting. Saku samping, saku bilur belakang, dan lipatan di bagian kaki. Skinny Fit – ukuran dengan model kaki sedikit lebih pendek yang mengetat di bagian paha, lutut, dan pergelangan kaki untuk menciptakan siluet yang pas.",
       "category": "celana",
-      "discount": 0
+      "discount": 0,
+      "stock": 10
     }
   ]
 }
