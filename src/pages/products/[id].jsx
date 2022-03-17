@@ -32,20 +32,27 @@ import {
 } from "react-share";
 import { useRouter } from "next/router";
 import Page from "../../component/Page";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { WEB_URL } from "../../configs/url";
 import { useEffect } from "react";
+import { cart_types } from "../../redux/types";
+import { fetchUserCart } from "../../redux/actions/cart";
 
 const ProductDetail = ({ productDetailData, user }) => {
   const router = useRouter();
   const toast = useToast();
+
+  const authSelector = useSelector((state) => state.auth);
+  const cartSelector = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
       quantity: 1,
     },
     onSubmit: () => {
-      console.log(router.asPath);
+      addToCartBtnHandler();
     },
     validationSchema: Yup.object().shape({
       quantity: Yup.number().required().min(1).max(productDetailData.stock),
@@ -98,6 +105,38 @@ const ProductDetail = ({ productDetailData, user }) => {
       status: "info",
       title: "Link copied",
     });
+  };
+
+  const addToCartBtnHandler = async () => {
+    try {
+      // 1. Jika barang belom pernah add to cart
+      // 2. Jika barang SUDAH pernah add to cart
+      const findItemInCart = cartSelector.items.find((val) => {
+        return val.id === productDetailData.id;
+      });
+
+      if (findItemInCart) {
+        await axiosInstance.patch(`/carts/${productDetailData.id}`, {
+          quantity: findItemInCart.quantity + formik.values.quantity,
+        });
+      } else {
+        await axiosInstance.post("/carts", {
+          userId: authSelector.id,
+          productId: productDetailData.id,
+          quantity: parseInt(formik.values.quantity),
+        });
+      }
+
+      dispatch(fetchUserCart());
+
+      toast({
+        title: "Item added to cart",
+        duration: 2000,
+        status: "success",
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

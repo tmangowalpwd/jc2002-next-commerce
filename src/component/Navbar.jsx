@@ -14,8 +14,8 @@ import jsCookie from "js-cookie";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axiosInstance from "../lib/api";
-import { auth_types, cart_types } from "../redux/types";
+import { fetchUserCart } from "../redux/actions/cart";
+import { auth_types } from "../redux/types";
 
 const Navbar = () => {
   const authSelector = useSelector((state) => state.auth);
@@ -23,27 +23,9 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const fetchUserCart = async () => {
-    try {
-      const res = await axiosInstance.get(`/carts`, {
-        params: {
-          userId: authSelector.id,
-          _expand: "product",
-        },
-      });
-
-      dispatch({
-        type: cart_types.GET_USER_CART,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     if (authSelector.id) {
-      fetchUserCart();
+      dispatch(fetchUserCart());
     }
   }, [authSelector.id]);
 
