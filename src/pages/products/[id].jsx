@@ -100,19 +100,6 @@ const ProductDetail = ({ productDetailData, user }) => {
     });
   };
 
-  // terisi SETELAH pertama kali render
-  const authSelector = useSelector((state) => state.auth);
-
-  // gimana kalau kita butuh data user sebelum pertama kali render?
-  const fetchUserProfile = async () => {
-    // butuh data user
-    await axiosInstance.get(`/users/${user.id}`);
-  };
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
   return (
     <Page
       title={`Beli ${productDetailData.product_name}`}
