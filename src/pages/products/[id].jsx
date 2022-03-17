@@ -14,19 +14,32 @@ import {
   Icon,
   IconButton,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
-import { BiPlus, BiMinus, BiHeart } from "react-icons/bi";
+import { BiPlus, BiMinus, BiHeart, BiCopy } from "react-icons/bi";
 import axiosInstance from "../../lib/api";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from "react-share";
+import { useRouter } from "next/router";
 
 const ProductDetail = ({ productDetailData }) => {
+  const router = useRouter();
+  const toast = useToast();
+
   const formik = useFormik({
     initialValues: {
       quantity: 1,
     },
     onSubmit: () => {
-      console.log("submit");
+      console.log(router.asPath);
     },
     validationSchema: Yup.object().shape({
       quantity: Yup.number().required().min(1).max(productDetailData.stock),
@@ -47,6 +60,8 @@ const ProductDetail = ({ productDetailData }) => {
 
     if (parsedValue < 0) return;
 
+    if (parsedValue > productDetailData.stock) return;
+
     formik.setFieldValue("quantity", event.target.value);
   };
 
@@ -65,6 +80,18 @@ const ProductDetail = ({ productDetailData }) => {
 
       formik.setFieldValue("quantity", formik.values.quantity - 1);
     }
+  };
+
+  const copyLinkBtnHandler = () => {
+    navigator.clipboard.writeText(
+      `https://grumpy-dolphin-14.loca.lt${router.asPath}`
+    );
+
+    toast({
+      position: "top-right",
+      status: "info",
+      title: "Link copied",
+    });
   };
 
   return (
@@ -127,6 +154,36 @@ const ProductDetail = ({ productDetailData }) => {
             <Button onClick={formik.handleSubmit} colorScheme="blue">
               Add to cart
             </Button>
+
+            <Box>
+              <Text fontWeight="medium">Share this to your friends!</Text>
+              <Stack mt={2} direction="row">
+                <FacebookShareButton
+                  url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+                  quote={`Cek ${productDetailData.product_name} sekarang juga!`}
+                >
+                  <FacebookIcon size={40} round />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  title={`Beli ${productDetailData.product_name} sekarang juga!`}
+                  url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+                >
+                  <TwitterIcon size={40} round />
+                </TwitterShareButton>
+                <LinkedinShareButton
+                  url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+                  title={`Beli ${productDetailData.product_name} sekarang juga!`}
+                  summary={productDetailData.description}
+                >
+                  <LinkedinIcon size={40} round />
+                </LinkedinShareButton>
+                <IconButton
+                  onClick={copyLinkBtnHandler}
+                  borderRadius="50%"
+                  icon={<Icon as={BiCopy} />}
+                />
+              </Stack>
+            </Box>
           </Stack>
         </Box>
 
