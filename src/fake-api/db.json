@@ -59,5 +59,19 @@
       "discount": 0,
       "stock": 10
     }
+  ],
+  "carts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "productId": 1,
+      "quantity": 3
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "productId": 4,
+      "quantity": 1
+    }
   ]
 }

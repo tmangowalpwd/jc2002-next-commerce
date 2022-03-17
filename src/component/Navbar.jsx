@@ -43,12 +43,14 @@ const Navbar = () => {
           <Link href="/products">
             <Button>Products</Button>
           </Link>
-          <Button>
-            Cart{" "}
-            <Badge ml={2} colorScheme="red">
-              4
-            </Badge>
-          </Button>
+          <Link href="/cart">
+            <Button>
+              Cart{" "}
+              <Badge ml={2} colorScheme="red">
+                4
+              </Badge>
+            </Button>
+          </Link>
         </Stack>
 
         <Stack spacing={4} direction="row">
