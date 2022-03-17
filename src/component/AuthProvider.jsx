@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import jsCookie from "js-cookie";
 
 const AuthProvider = ({ children }) => {
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,11 +18,7 @@ const AuthProvider = ({ children }) => {
         payload: parsedUserData,
       });
     }
-
-    setIsAuthChecked(true);
   }, []);
-
-  if (!isAuthChecked) return <div>Loading...</div>;
 
   return children;
 };

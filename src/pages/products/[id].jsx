@@ -27,11 +27,16 @@ import {
   LinkedinShareButton,
   TwitterIcon,
   TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
 } from "react-share";
 import { useRouter } from "next/router";
 import Page from "../../component/Page";
+import { useSelector } from "react-redux";
+import { WEB_URL } from "../../configs/url";
+import { useEffect } from "react";
 
-const ProductDetail = ({ productDetailData }) => {
+const ProductDetail = ({ productDetailData, user }) => {
   const router = useRouter();
   const toast = useToast();
 
@@ -95,13 +100,27 @@ const ProductDetail = ({ productDetailData }) => {
     });
   };
 
+  // terisi SETELAH pertama kali render
+  const authSelector = useSelector((state) => state.auth);
+
+  // gimana kalau kita butuh data user sebelum pertama kali render?
+  const fetchUserProfile = async () => {
+    // butuh data user
+    await axiosInstance.get(`/users/${user.id}`);
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
   return (
     <Page
       title={`Beli ${productDetailData.product_name}`}
       description={productDetailData.description}
       image={productDetailData.image_url}
-      url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+      url={`${WEB_URL}${router.asPath}`}
     >
+      <Text ml="20">{authSelector.username}</Text>
       <Container minW="5xl" pt={20}>
         <Flex>
           <Box flex={4} pr={8} display="flex" alignItems="center">
@@ -166,19 +185,19 @@ const ProductDetail = ({ productDetailData }) => {
                 <Text fontWeight="medium">Share this to your friends!</Text>
                 <Stack mt={2} direction="row">
                   <FacebookShareButton
-                    url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+                    url={`${WEB_URL}${router.asPath}`}
                     quote={`Cek ${productDetailData.product_name} sekarang juga!`}
                   >
                     <FacebookIcon size={40} round />
                   </FacebookShareButton>
                   <TwitterShareButton
                     title={`Beli ${productDetailData.product_name} sekarang juga!`}
-                    url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+                    url={`${WEB_URL}${router.asPath}`}
                   >
                     <TwitterIcon size={40} round />
                   </TwitterShareButton>
                   <LinkedinShareButton
-                    url={`https://grumpy-dolphin-14.loca.lt${router.asPath}`}
+                    url={`${WEB_URL}${router.asPath}`}
                     title={`Beli ${productDetailData.product_name} sekarang juga!`}
                     summary={productDetailData.description}
                   >
