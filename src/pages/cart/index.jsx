@@ -1,7 +1,20 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Icon,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import CartItem from "../../component/CartItem";
 import requiresAuth from "../../lib/hoc/requiresAuth";
+import { BsCart, BsCart2 } from "react-icons/bs";
 
 const CartPage = ({ user }) => {
   const cartSelector = useSelector((state) => state.cart);
@@ -24,11 +37,73 @@ const CartPage = ({ user }) => {
   };
 
   return (
-    <Container minW={"5xl"}>
-      <Box paddingTop={12}>
-        <Heading mb={8}>Cart Items ({cartSelector.items.length})</Heading>
-        {renderCartItems()}
-      </Box>
+    <Container minW={"7xl"} paddingTop={12}>
+      <Heading mb={8}>Cart Items ({cartSelector.items.length})</Heading>
+      <Flex>
+        <Box flex={9}>{renderCartItems()}</Box>
+        <Box flex={3}>
+          <Stack
+            borderWidth={1}
+            borderColor="gray.400"
+            w="100%"
+            borderRadius={8}
+            padding={8}
+            spacing={6}
+          >
+            <Text fontSize="xl" fontWeight="medium" color="gray.700">
+              Order Summary
+            </Text>
+
+            <Stack spacing={2}>
+              <Flex justify="space-between">
+                <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                  Subtotal
+                </Text>
+                <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                  Rp. {(100000).toLocaleString()}
+                </Text>
+              </Flex>
+
+              <Flex justify="space-between">
+                <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                  Delivery Cost
+                </Text>
+                <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                  Rp. {(100000).toLocaleString()}
+                </Text>
+              </Flex>
+
+              <Flex justify="space-between">
+                <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                  Tax (10%)
+                </Text>
+                <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                  Rp. {(100000).toLocaleString()}
+                </Text>
+              </Flex>
+
+              <Divider />
+
+              <Flex justify="space-between">
+                <Text fontSize="md" fontWeight="bold">
+                  Grand Total
+                </Text>
+
+                <Text fontSize="md" fontWeight="bold">
+                  Rp. {(100000).toLocaleString()}
+                </Text>
+              </Flex>
+            </Stack>
+
+            <Button
+              colorScheme="green"
+              rightIcon={<Icon fontWeight="bold" as={BsCart2} />}
+            >
+              Checkout
+            </Button>
+          </Stack>
+        </Box>
+      </Flex>
     </Container>
   );
 };
