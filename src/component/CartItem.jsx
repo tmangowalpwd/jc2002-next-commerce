@@ -15,6 +15,10 @@ import { useDispatch } from "react-redux";
 import axiosInstance from "../lib/api";
 import { fetchUserCart } from "../redux/actions/cart";
 import { cart_types } from "../redux/types";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import _ from "lodash";
+import { useCallback } from "react";
 
 const CartItem = ({
   imageUrl,
@@ -45,6 +49,56 @@ const CartItem = ({
     }
   };
 
+  const debounceQtyInputHandler = useCallback(
+    _.debounce(async (value) => {
+      await axiosInstance.patch(`/carts/${id}`, {
+        quantity: value,
+      });
+
+      dispatch({
+        type: cart_types.EDIT_QTY,
+        payload: {
+          idx: cartIndex,
+          quantity: value,
+        },
+      });
+    }, 1500),
+    []
+  );
+
+  const qtyInputHandler = (event) => {
+    const { value } = event.target;
+
+    if (value === "") {
+      formik.setFieldValue("quantity", value);
+      return;
+    }
+
+    const parsedValue = parseInt(value);
+
+    if (isNaN(parsedValue)) return;
+
+    if (parsedValue < 0) return;
+
+    if (parsedValue > stock) return;
+
+    try {
+      debounceQtyInputHandler(parsedValue);
+      formik.setFieldValue("quantity", parsedValue);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      quantity: quantity,
+    },
+    validationSchema: Yup.object().shape({
+      quantity: Yup.number().required().min(1).max(stock),
+    }),
+  });
+
   return (
     <Grid templateColumns="repeat(7, 1fr)" my={4}>
       <GridItem w="100%" display="flex" alignItems="center">
@@ -67,11 +121,12 @@ const CartItem = ({
 
       <GridItem w="100%" display="flex" alignItems="center">
         <Input
-          defaultValue={quantity || 0}
           h={12}
           w={24}
           textAlign="center"
           type="number"
+          value={formik.values.quantity}
+          onChange={qtyInputHandler}
         />
       </GridItem>
       <GridItem

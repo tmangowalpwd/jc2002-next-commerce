@@ -60,5 +60,12 @@
       "stock": 10
     }
   ],
-  "carts": []
+  "carts": [
+    {
+      "userId": 1,
+      "productId": 1,
+      "quantity": 3,
+      "id": 1
+    }
+  ]
 }
