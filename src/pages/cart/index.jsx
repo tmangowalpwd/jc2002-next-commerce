@@ -6,16 +6,28 @@ import requiresAuth from "../../lib/hoc/requiresAuth";
 const CartPage = ({ user }) => {
   const cartSelector = useSelector((state) => state.cart);
 
+  const renderCartItems = () => {
+    return cartSelector.items.map((item, idx) => {
+      return (
+        <CartItem
+          id={item?.id}
+          imageUrl={item?.product?.image_url}
+          category={item?.product?.category}
+          price={item?.product?.price}
+          quantity={item?.quantity}
+          productName={item?.product?.product_name}
+          stock={item?.product?.stock}
+          cartIndex={idx}
+        />
+      );
+    });
+  };
+
   return (
     <Container minW={"5xl"}>
       <Box paddingTop={12}>
-        {/* {cartSelector?.items?.map((val) => {
-          return <Text>{val?.product?.product_name}</Text>;
-        })} */}
         <Heading mb={8}>Cart Items ({cartSelector.items.length})</Heading>
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {renderCartItems()}
       </Box>
     </Container>
   );

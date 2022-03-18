@@ -11,8 +11,40 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import axiosInstance from "../lib/api";
+import { fetchUserCart } from "../redux/actions/cart";
+import { cart_types } from "../redux/types";
 
-const CartItem = () => {
+const CartItem = ({
+  imageUrl,
+  productName,
+  category,
+  quantity,
+  price,
+  id,
+  stock,
+  cartIndex,
+}) => {
+  const dispatch = useDispatch();
+
+  const deleteCartItem = async () => {
+    try {
+      await axiosInstance.delete(`/carts/${id}`);
+
+      // Cara pertama: melakukan manipulasi store redux untuk update data "terbaru"
+      dispatch({
+        type: cart_types.DELETE_ITEM,
+        payload: cartIndex,
+      });
+
+      // Cara kedua: fetch ke database lagi untuk update data cart terbaru
+      // dispatch(fetchUserCart())
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Grid templateColumns="repeat(7, 1fr)" my={4}>
       <GridItem w="100%" display="flex" alignItems="center">
@@ -20,22 +52,27 @@ const CartItem = () => {
           objectFit="cover"
           boxSize="120px"
           borderRadius={8}
-          src={
-            "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/9999deeeddc8471743761964befbc60e9747d3eb_xxl-1.jpg"
-          }
+          src={imageUrl}
+          fallbackSrc={"https://via.placeholder.com/120"}
         />
       </GridItem>
       <GridItem w="100%" colSpan={2} display="flex" alignItems="center">
         <Flex direction="column">
-          <Text fontWeight="medium">Product Name</Text>
+          <Text fontWeight="medium">{productName || "Product"}</Text>
           <Text color="gray.600" fontSize="sm">
-            Category
+            {category || "Category"}
           </Text>
         </Flex>
       </GridItem>
 
       <GridItem w="100%" display="flex" alignItems="center">
-        <Input h={12} w={24} textAlign="center" type="number" />
+        <Input
+          defaultValue={quantity || 0}
+          h={12}
+          w={24}
+          textAlign="center"
+          type="number"
+        />
       </GridItem>
       <GridItem
         w="100%"
@@ -44,10 +81,14 @@ const CartItem = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Text fontWeight="medium">Rp {(120000).toLocaleString()}</Text>
+        <Text fontWeight="medium">Rp {price?.toLocaleString()}</Text>
       </GridItem>
       <GridItem w="100%" display="flex" alignItems="center">
-        <IconButton colorScheme="red" icon={<Icon as={IoMdClose} />} />
+        <IconButton
+          onClick={deleteCartItem}
+          colorScheme="red"
+          icon={<Icon as={IoMdClose} />}
+        />
       </GridItem>
     </Grid>
   );
