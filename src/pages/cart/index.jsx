@@ -10,14 +10,25 @@ import {
   Icon,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../../component/CartItem";
 import requiresAuth from "../../lib/hoc/requiresAuth";
 import { BsCart, BsCart2 } from "react-icons/bs";
+import axiosInstance from "../../lib/api";
+import moment from "moment";
+import { useRouter } from "next/router";
 
 const CartPage = ({ user }) => {
   const cartSelector = useSelector((state) => state.cart);
+  const authSelector = useSelector((state) => state.auth);
+
+  const toast = useToast();
+
+  const dispatch = useDispatch();
+
+  const router = useRouter();
 
   const renderCartItems = () => {
     return cartSelector.items.map((item, idx) => {
@@ -54,6 +65,47 @@ const CartPage = ({ user }) => {
 
   const calculateGrandTotal = () => {
     return calculateTotalPrice() + calculateTax() + deliveryCost;
+  };
+
+  const checkoutBtnHandler = async () => {
+    try {
+      const transaction_items = cartSelector.items.map((item) => {
+        return {
+          id: item.product.id,
+          product_name: item.product.product_name,
+          price: item.product.price,
+          image_url: item.product.image_url,
+          description: item.product.description,
+          category: item.product.category,
+          quantity: item.quantity,
+        };
+      });
+
+      await axiosInstance.post("/transactions", {
+        userId: authSelector.id,
+        total_price: calculateGrandTotal(),
+        transaction_date: moment().format("DD-MM-YYYY"),
+        transaction_items,
+      });
+
+      for (const item of cartSelector.items) {
+        await axiosInstance.delete(`/carts/${item.id}`);
+      }
+
+      dispatch({
+        type: "EMPTY_CART",
+      });
+
+      router.push("/");
+
+      toast({
+        status: "success",
+        title: "Transaction created!",
+        position: "top-right",
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -118,6 +170,7 @@ const CartPage = ({ user }) => {
             <Button
               colorScheme="green"
               rightIcon={<Icon fontWeight="bold" as={BsCart2} />}
+              onClick={checkoutBtnHandler}
             >
               Checkout
             </Button>

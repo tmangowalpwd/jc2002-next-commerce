@@ -60,17 +60,49 @@
       "stock": 10
     }
   ],
-  "carts": [
+  "carts": [],
+  "transactions": [
     {
       "userId": 1,
-      "productId": 1,
-      "quantity": 9,
+      "total_price": 4984000,
+      "transaction_date": "18-03-2022",
+      "transaction_items": [
+        {
+          "id": 1,
+          "product_name": "Kaos Katun Premium",
+          "price": 380000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/444b6b8e6d40c8249766694731048fb0b5d22eca_xxl-1.jpg",
+          "description": "PREMIUM QUALITY Kaus oblong kerah bulat dari katun jersi premium.",
+          "category": "kaos",
+          "quantity": 9
+        },
+        {
+          "id": 3,
+          "product_name": "Jogger Cargo Skinny Fit",
+          "price": 550000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/4d39f6d0648b382786568e42538b4f590ee67501_xxl-1.jpg",
+          "description": "Celana jogger berbahan twill katun stretch dengan karet dan tali serut di bagian pinggang. Saku samping, saku kaki dan belakang dengan flap serta kancing tekan tersembunyi, dan karet di bagian kelim. Skinny Fit – ukuran dengan kaki yang sedikit lebih pendek dan mengepas di bagian paha, lutut, dan pergelangan kaki untuk menciptakan siluet yang pas.",
+          "category": "celana",
+          "quantity": 2
+        }
+      ],
       "id": 1
     },
     {
       "userId": 1,
-      "productId": 3,
-      "quantity": 2,
+      "total_price": 1266000,
+      "transaction_date": "18-03-2022",
+      "transaction_items": [
+        {
+          "id": 1,
+          "product_name": "Kaos Katun Premium",
+          "price": 380000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/444b6b8e6d40c8249766694731048fb0b5d22eca_xxl-1.jpg",
+          "description": "PREMIUM QUALITY Kaus oblong kerah bulat dari katun jersi premium.",
+          "category": "kaos",
+          "quantity": 3
+        }
+      ],
       "id": 2
     }
   ]
