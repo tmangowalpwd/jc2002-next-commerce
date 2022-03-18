@@ -17,7 +17,7 @@
       "description": "PREMIUM QUALITY Kaus oblong kerah bulat dari katun jersi premium.",
       "category": "kaos",
       "discount": 0,
-      "stock": 10
+      "stock": 0
     },
     {
       "id": 2,
@@ -57,7 +57,7 @@
       "description": "Celana panjang untuk setelan dari bahan tenun lentur, dengan kancing kait tersembunyi dan golbi ritsleting. Saku samping, saku bilur belakang, dan lipatan di bagian kaki. Skinny Fit – ukuran dengan model kaki sedikit lebih pendek yang mengetat di bagian paha, lutut, dan pergelangan kaki untuk menciptakan siluet yang pas.",
       "category": "celana",
       "discount": 0,
-      "stock": 10
+      "stock": 0
     }
   ],
   "carts": [],
@@ -104,6 +104,74 @@
         }
       ],
       "id": 2
+    },
+    {
+      "userId": 1,
+      "total_price": 848000,
+      "transaction_date": "18-03-2022",
+      "transaction_items": [
+        {
+          "id": 1,
+          "product_name": "Kaos Katun Premium",
+          "price": 380000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/444b6b8e6d40c8249766694731048fb0b5d22eca_xxl-1.jpg",
+          "description": "PREMIUM QUALITY Kaus oblong kerah bulat dari katun jersi premium.",
+          "category": "kaos",
+          "quantity": 2
+        }
+      ],
+      "id": 3
+    },
+    {
+      "userId": 1,
+      "total_price": 3356000,
+      "transaction_date": "18-03-2022",
+      "transaction_items": [
+        {
+          "id": 1,
+          "product_name": "Kaos Katun Premium",
+          "price": 380000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/444b6b8e6d40c8249766694731048fb0b5d22eca_xxl-1.jpg",
+          "description": "PREMIUM QUALITY Kaus oblong kerah bulat dari katun jersi premium.",
+          "category": "kaos",
+          "quantity": 8
+        }
+      ],
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "total_price": 3037000,
+      "transaction_date": "18-03-2022",
+      "transaction_items": [
+        {
+          "id": 5,
+          "product_name": "Celana Panjang Setelan Skinny Fit",
+          "price": 550000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/9999deeeddc8471743761964befbc60e9747d3eb_xxl-1.jpg",
+          "description": "Celana panjang untuk setelan dari bahan tenun lentur, dengan kancing kait tersembunyi dan golbi ritsleting. Saku samping, saku bilur belakang, dan lipatan di bagian kaki. Skinny Fit – ukuran dengan model kaki sedikit lebih pendek yang mengetat di bagian paha, lutut, dan pergelangan kaki untuk menciptakan siluet yang pas.",
+          "category": "celana",
+          "quantity": 5
+        }
+      ],
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "total_price": 3037000,
+      "transaction_date": "18-03-2022",
+      "transaction_items": [
+        {
+          "id": 5,
+          "product_name": "Celana Panjang Setelan Skinny Fit",
+          "price": 550000,
+          "image_url": "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/9999deeeddc8471743761964befbc60e9747d3eb_xxl-1.jpg",
+          "description": "Celana panjang untuk setelan dari bahan tenun lentur, dengan kancing kait tersembunyi dan golbi ritsleting. Saku samping, saku bilur belakang, dan lipatan di bagian kaki. Skinny Fit – ukuran dengan model kaki sedikit lebih pendek yang mengetat di bagian paha, lutut, dan pergelangan kaki untuk menciptakan siluet yang pas.",
+          "category": "celana",
+          "quantity": 5
+        }
+      ],
+      "id": 6
     }
   ]
 }

@@ -89,6 +89,9 @@ const CartPage = ({ user }) => {
       });
 
       for (const item of cartSelector.items) {
+        await axiosInstance.patch(`/products/${item.product.id}`, {
+          stock: item.product.stock - item.quantity,
+        });
         await axiosInstance.delete(`/carts/${item.id}`);
       }
 

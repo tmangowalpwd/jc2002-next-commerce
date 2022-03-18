@@ -200,7 +200,11 @@ const ProductDetail = ({ productDetailData, user }) => {
                 </Button>
               </Flex>
 
-              <Button onClick={formik.handleSubmit} colorScheme="blue">
+              <Button
+                onClick={formik.handleSubmit}
+                disabled={!productDetailData.stock}
+                colorScheme="blue"
+              >
                 Add to cart
               </Button>
 

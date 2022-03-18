@@ -4,6 +4,13 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import styles from '../styles/Home.module.css'
 
+// 1. Button add to cart di product list akan add barang sebanyak 1 qty
+// 2. Munculin badge "out of stock" di product list jika stock -> 0
+// 3. Jika ada diskon, coret harga asli product, lalu tampilkan
+//    harga setelah diskon
+// 4. Ketika checkout, calculate harga dengan harga yg sudah terpotong
+//    oleh diskon
+
 export default function Home() {
   const authSelector = useSelector((state) => state.auth);
 
