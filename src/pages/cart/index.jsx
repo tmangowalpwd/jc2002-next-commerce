@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Container,
@@ -19,6 +21,7 @@ import { BsCart, BsCart2 } from "react-icons/bs";
 import axiosInstance from "../../lib/api";
 import moment from "moment";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const CartPage = ({ user }) => {
   const cartSelector = useSelector((state) => state.cart);
@@ -115,69 +118,85 @@ const CartPage = ({ user }) => {
     <Container minW={"7xl"} paddingTop={12}>
       <Heading mb={8}>Cart Items ({cartSelector.items.length})</Heading>
       <Flex>
-        <Box flex={9}>{renderCartItems()}</Box>
+        <Box flex={9}>
+          {cartSelector.items.length ? (
+            renderCartItems()
+          ) : (
+            <Alert status="warning">
+              <AlertIcon />
+              Your shopping cart is empty!{" "}
+              <Link href="/products">
+                <Button colorScheme="green" ml={6}>
+                  Start shopping
+                </Button>
+              </Link>
+            </Alert>
+          )}
+        </Box>
         <Box flex={3}>
-          <Stack
-            borderWidth={1}
-            borderColor="gray.400"
-            w="100%"
-            borderRadius={8}
-            padding={8}
-            spacing={6}
-          >
-            <Text fontSize="xl" fontWeight="medium" color="gray.700">
-              Order Summary
-            </Text>
-
-            <Stack spacing={2}>
-              <Flex justify="space-between">
-                <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Subtotal
-                </Text>
-                <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Rp. {calculateTotalPrice().toLocaleString()}
-                </Text>
-              </Flex>
-
-              <Flex justify="space-between">
-                <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Delivery Cost
-                </Text>
-                <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Rp. {deliveryCost.toLocaleString()}
-                </Text>
-              </Flex>
-
-              <Flex justify="space-between">
-                <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Tax (10%)
-                </Text>
-                <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Rp. {calculateTax().toLocaleString()}
-                </Text>
-              </Flex>
-
-              <Divider />
-
-              <Flex justify="space-between">
-                <Text fontSize="md" fontWeight="bold">
-                  Grand Total
-                </Text>
-
-                <Text fontSize="md" fontWeight="bold">
-                  Rp. {calculateGrandTotal().toLocaleString()}
-                </Text>
-              </Flex>
-            </Stack>
-
-            <Button
-              colorScheme="green"
-              rightIcon={<Icon fontWeight="bold" as={BsCart2} />}
-              onClick={checkoutBtnHandler}
+          {Boolean(cartSelector.items.length) && (
+            <Stack
+              borderWidth={1}
+              borderColor="gray.400"
+              w="100%"
+              borderRadius={8}
+              padding={8}
+              spacing={6}
             >
-              Checkout
-            </Button>
-          </Stack>
+              <Text fontSize="xl" fontWeight="medium" color="gray.700">
+                Order Summary
+              </Text>
+
+              <Stack spacing={2}>
+                <Flex justify="space-between">
+                  <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                    Subtotal
+                  </Text>
+                  <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                    Rp. {calculateTotalPrice().toLocaleString()}
+                  </Text>
+                </Flex>
+
+                <Flex justify="space-between">
+                  <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                    Delivery Cost
+                  </Text>
+                  <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                    Rp. {deliveryCost.toLocaleString()}
+                  </Text>
+                </Flex>
+
+                <Flex justify="space-between">
+                  <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                    Tax (10%)
+                  </Text>
+                  <Text fontSize="sm" fontWeight="medium" color="gray.600">
+                    Rp. {calculateTax().toLocaleString()}
+                  </Text>
+                </Flex>
+
+                <Divider />
+
+                <Flex justify="space-between">
+                  <Text fontSize="md" fontWeight="bold">
+                    Grand Total
+                  </Text>
+
+                  <Text fontSize="md" fontWeight="bold">
+                    Rp. {calculateGrandTotal().toLocaleString()}
+                  </Text>
+                </Flex>
+              </Stack>
+
+              <Button
+                colorScheme="green"
+                rightIcon={<Icon fontWeight="bold" as={BsCart2} />}
+                onClick={checkoutBtnHandler}
+              >
+                Checkout
+              </Button>
+            </Stack>
+          )}
         </Box>
       </Flex>
     </Container>

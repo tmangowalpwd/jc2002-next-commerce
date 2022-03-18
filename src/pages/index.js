@@ -10,6 +10,8 @@ import styles from '../styles/Home.module.css'
 //    harga setelah diskon
 // 4. Ketika checkout, calculate harga dengan harga yg sudah terpotong
 //    oleh diskon
+// 5. a. Tampilkan history transaksi user
+//    b. Buat halaman detail history
 
 export default function Home() {
   const authSelector = useSelector((state) => state.auth);
