@@ -136,7 +136,9 @@ const CartItem = ({
         alignItems="center"
         justifyContent="center"
       >
-        <Text fontWeight="medium">Rp {price?.toLocaleString()}</Text>
+        <Text fontWeight="medium">
+          Rp {(price * formik.values.quantity).toLocaleString()}
+        </Text>
       </GridItem>
       <GridItem w="100%" display="flex" alignItems="center">
         <IconButton
