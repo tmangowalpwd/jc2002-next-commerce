@@ -36,6 +36,26 @@ const CartPage = ({ user }) => {
     });
   };
 
+  const deliveryCost = 12000;
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+
+    cartSelector.items.forEach((item) => {
+      totalPrice += item?.quantity * item?.product?.price;
+    });
+
+    return totalPrice;
+  };
+
+  const calculateTax = () => {
+    return calculateTotalPrice() / 10;
+  };
+
+  const calculateGrandTotal = () => {
+    return calculateTotalPrice() + calculateTax() + deliveryCost;
+  };
+
   return (
     <Container minW={"7xl"} paddingTop={12}>
       <Heading mb={8}>Cart Items ({cartSelector.items.length})</Heading>
@@ -60,7 +80,7 @@ const CartPage = ({ user }) => {
                   Subtotal
                 </Text>
                 <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Rp. {(100000).toLocaleString()}
+                  Rp. {calculateTotalPrice().toLocaleString()}
                 </Text>
               </Flex>
 
@@ -69,7 +89,7 @@ const CartPage = ({ user }) => {
                   Delivery Cost
                 </Text>
                 <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Rp. {(100000).toLocaleString()}
+                  Rp. {deliveryCost.toLocaleString()}
                 </Text>
               </Flex>
 
@@ -78,7 +98,7 @@ const CartPage = ({ user }) => {
                   Tax (10%)
                 </Text>
                 <Text fontSize="sm" fontWeight="medium" color="gray.600">
-                  Rp. {(100000).toLocaleString()}
+                  Rp. {calculateTax().toLocaleString()}
                 </Text>
               </Flex>
 
@@ -90,7 +110,7 @@ const CartPage = ({ user }) => {
                 </Text>
 
                 <Text fontSize="md" fontWeight="bold">
-                  Rp. {(100000).toLocaleString()}
+                  Rp. {calculateGrandTotal().toLocaleString()}
                 </Text>
               </Flex>
             </Stack>
