@@ -35,9 +35,15 @@ const CartItem = () => {
       </GridItem>
 
       <GridItem w="100%" display="flex" alignItems="center">
-        <Input boxSize={12} textAlign="center" type="number" />
+        <Input h={12} w={24} textAlign="center" type="number" />
       </GridItem>
-      <GridItem w="100%" colSpan={2} display="flex" alignItems="center">
+      <GridItem
+        w="100%"
+        colSpan={2}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Text fontWeight="medium">Rp {(120000).toLocaleString()}</Text>
       </GridItem>
       <GridItem w="100%" display="flex" alignItems="center">

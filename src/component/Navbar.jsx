@@ -56,7 +56,7 @@ const Navbar = () => {
             <Button>
               Cart{" "}
               <Badge ml={2} colorScheme="red">
-                {cartSelector.items.length}
+                {cartSelector?.items?.length}
               </Badge>
             </Button>
           </Link>
