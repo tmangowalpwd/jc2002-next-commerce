@@ -13,9 +13,10 @@ const AuthProvider = ({ children }) => {
 
     if (userToken) {
       try {
-        const userResponse = await axiosInstance.get("/auth/refresh-token");
+        const userResponse = await axiosInstance.get(
+          "/auth/session/refresh-token"
+        );
 
-        console.log(userResponse.data);
         jsCookie.set("auth_token", userResponse?.data?.result?.token || "");
 
         dispatch({

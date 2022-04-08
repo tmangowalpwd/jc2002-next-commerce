@@ -5,7 +5,7 @@ import { auth_types, network_types } from "../types";
 export const userLogin = (values, setSubmitting) => {
   return async (dispatch) => {
     try {
-      const res = await api.post("/auth/login", {
+      const res = await api.post("/auth/session/login", {
         username: values.username,
         password: values.password
       });
