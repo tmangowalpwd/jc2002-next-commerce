@@ -261,7 +261,7 @@ export const getServerSideProps = async (context) => {
 
     return {
       props: {
-        productDetailData: res.data,
+        productDetailData: res.data.result,
       },
     };
   } catch (err) {
@@ -270,3 +270,4 @@ export const getServerSideProps = async (context) => {
 };
 
 export default ProductDetail;
+

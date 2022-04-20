@@ -10,7 +10,7 @@ const ProductsPage = () => {
     try {
       const res = await axiosInstance.get("/products");
 
-      setProductList(res.data);
+      setProductList(res.data.result);
     } catch (err) {
       console.log(err.message);
     }
@@ -46,3 +46,4 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
+

@@ -35,7 +35,7 @@ const ProductCard = ({ imageUrl, productName, price, id }) => {
           Add to Cart
         </Button>
         <NextLink href={`/products/${id}`} passHref>
-          <ChakraLink textDecoration="underline">View Details</ChakraLink>
+          View Details
         </NextLink>
       </Stack>
     </Stack>
@@ -43,3 +43,4 @@ const ProductCard = ({ imageUrl, productName, price, id }) => {
 };
 
 export default ProductCard;
+
