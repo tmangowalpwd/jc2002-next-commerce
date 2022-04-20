@@ -1,4 +1,5 @@
 import { Box, Center, Flex } from "@chakra-ui/react";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import ProductCard from "../../component/ProductCard";
 import axiosInstance from "../../lib/api";
@@ -37,11 +38,16 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <Center>
-      <Box paddingTop={10} width="4xl">
-        <Flex wrap="wrap">{renderProducts()}</Flex>
-      </Box>
-    </Center>
+    <>
+      <Head>
+        <title>Products Page</title>
+      </Head>
+      <Center>
+        <Box paddingTop={10} width="4xl">
+          <Flex wrap="wrap">{renderProducts()}</Flex>
+        </Box>
+      </Center>
+    </>
   );
 };
 

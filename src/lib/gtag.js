@@ -6,10 +6,11 @@ export const pageView = (url) => {
   })
 }
 
-export const gaEvent = ({ action, label, value, category }) => {
+export const gaEvent = ({ action, label, value, category, user_id }) => {
   window.gtag("event", action, {
     event_category: category,
     event_label: label,
-    value
+    value,
+    user_id: user_id ? user_id : "guest"
   })
 }

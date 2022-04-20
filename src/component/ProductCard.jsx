@@ -6,10 +6,29 @@ import {
   Stack,
   Text,
   Link as ChakraLink,
+  useToast,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import * as gtag from "../lib/gtag";
 
 const ProductCard = ({ imageUrl, productName, price, id }) => {
+  const toast = useToast();
+
+  const addToCart = () => {
+    toast({
+      status: "success",
+      title: "Add to cart",
+      duration: 1000,
+    });
+
+    gtag.gaEvent({
+      action: "add_to_cart",
+      label: `atc product:${id}`,
+      value: `product:${id}`,
+      category: "cart",
+      user_id: 13,
+    });
+  };
   return (
     <Stack width="2xs" spacing={4}>
       {/* Image */}
@@ -31,7 +50,7 @@ const ProductCard = ({ imageUrl, productName, price, id }) => {
       </Box>
 
       <Stack alignItems="center">
-        <Button width="100%" colorScheme="blue">
+        <Button onClick={addToCart} width="100%" colorScheme="blue">
           Add to Cart
         </Button>
         <NextLink href={`/products/${id}`} passHref>
